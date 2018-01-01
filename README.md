@@ -1,11 +1,52 @@
 # Libcloud Integration Pack
 
-This integration pack allows you to integrate with
+This pack allows you to integrate with
 [Apache Libcloud](http://libcloud.apache.org/).
+
+## Configuration
+
+Copy the example configuration in [libcloud.yaml.example](./libcloud.yaml.example)
+to `/opt/stackstorm/configs/libcloud.yaml` and edit as required.
+
+It must contain a credentials set for the Cloud providers you wish to use.
+Actions take a `credentials` parameter to specify which credentials to use.
+
+Example configuration:
+
+```yaml
+---
+  credentials:
+    ec2_prod_us_west_1:
+      api_key: "username"
+      api_secret: "password"
+      type: "compute"
+      provider: "ec2_us_east"
+      region: "us-west-1"
+    rax_dev_iad:
+      api_key: "username"
+      api_secret: "password"
+      type: "compute"
+      provider: "rackspace"
+      region: "iad"
+    gce:
+      api_key: "service account email"
+      api_secret: "path to pem file"
+      type: "compute"
+      provider: "gce"
+      # Arbitrary driver constructor arguments can be passed by utilizing extra_kwargs
+      # config option
+      extra_kwargs:
+        project: "your project id"
+        datacenter: "us-central1-a"
+```
+
+**Note** : When modifying the configuration in `/opt/stackstorm/configs/` please
+           remember to tell StackStorm to load these new values by running
+           `st2ctl reload --register-configs`
 
 ## Actions
 
-Currently, the following actions listed bellow are supported:
+The following actions are supported:
 
 ### Virtual Machines / Servers
 
